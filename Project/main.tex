@@ -24,16 +24,23 @@
 \maketitle
 %\vspace{-0.5cm}
 
-Il progetto riguarda il controllo di \dots, la cui dinamica viene descritta dalle seguenti equazioni differenziali 
+Il progetto riguarda il controllo dell'\textit{assetto di un drone planare}, la cui dinamica viene descritta dalle seguenti equazioni differenziali 
 %
 \begin{subequations}\label{eq:system}
 \begin{align}
-	\dots,
+	\dot \theta & = \omega 
+	\\
+	J \dot \omega & = -\beta \omega + \frac{a}{2} \sin(\theta) F_v + a F_p
 \end{align}
 \end{subequations}
 %
-dove \dots rappresenta \dots.
+dove $J \in \R$ rappresenta il \textbf{momento di inerzia} del drone rispetto all'asse di rotazione che passa per il baricentro, $\beta \in \R$ il \textit{coefficiente di attrito dinamico} dovuto alla presenza dell'aria, $a \in \R$ la \textbf{semi-ampiezza planare} del drone, e $F_v \in \R$ la \textbf{forza costante dovuta all'azione del vento}.
 
+\bb
+
+La variabile di ingresso del sistema, definita come $F_p(t) = F_1(t) - F_2(t)$, indica la \textbf{differenza tra le forze di propulsione} $F_1(t), F_2(t)$ applicate sul drone.
+
+\resource{0.5}{drone.png}{Rappresentazione nel piano del drone considerato}
 
 \section{Espressione del sistema in forma di stato e calcolo del sistema linearizzato intorno ad una coppia di equilibrio}
 
