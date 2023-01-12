@@ -1,72 +1,28 @@
 \documentclass[a4paper, 11pt]{article}
-\usepackage[margin=3cm]{geometry}
-\usepackage[]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[italian]{babel}
-\usepackage{geometry}
-\geometry{a4paper, top=2cm, bottom=3cm, left=1.5cm, right=1.5cm, heightrounded, bindingoffset=5mm}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{gensymb}
-\usepackage{graphicx}
-\usepackage{psfrag,amsmath,amsfonts,verbatim}
-\usepackage{xcolor}
-\usepackage{color,soul}
-\usepackage{fancyhdr}
-\usepackage{indentfirst}
-\usepackage{graphicx}
-\usepackage{newlfont}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{latexsym}
-\usepackage{amsthm}
-%\usepackage{subfigure}
-\usepackage{subcaption}
-\usepackage{psfrag}
-\usepackage{footnote}
-\usepackage{graphics}
-\usepackage{color}
-\usepackage{hyperref}
-\usepackage{tikz}
 
-
-\usetikzlibrary{snakes}
-\usetikzlibrary{positioning}
-\usetikzlibrary{shapes,arrows}
-
-	
-	\tikzstyle{block} = [draw, fill=white, rectangle, 
-	minimum height=3em, minimum width=6em]
-	\tikzstyle{sum} = [draw, fill=white, circle, node distance=1cm]
-	\tikzstyle{input} = [coordinate]
-	\tikzstyle{output} = [coordinate]
-	\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+\input{commands.tex}
 
 \newcommand{\courseacronym}{CAT}
 \newcommand{\coursename}{Controlli Automatici - T}
-\newcommand{\tipology}{\dots}
-\newcommand{\trace}{\dots}
-\newcommand{\projectname}{Nome del Progetto}
-\newcommand{\group}{\dots}
+\newcommand{\tipology}{\textbf{a} }
+\renewcommand{\trace}{\textbf{3}}
+\newcommand{\projectname}{\textbf{\textit{Controllo dell'assetto di un drone planare}}}
+\newcommand{\group}{\textbf{AA}}
 
-%opening
 \title{ \vspace{-1in}
-		\huge \strut \coursename \strut 
-		\\
-		\Large  \strut Progetto Tipologia \tipology - Traccia \trace 
-		\\
-		\Large  \strut \projectname\strut
-		\\
+		\huge \strut \coursename \strut \\
+		\Large  \strut Progetto Tipologia \tipology - Traccia \trace \\
+		\Large  \strut \projectname\strut \\
 		\Large  \strut Gruppo \group\strut
 		\vspace{-0.4cm}
 }
-\author{Autore, \dots}
-\date{}
+\author{Autori: \textbf{Leonardo Dominici, Fabio Colonna, Edoardo Marinelli, Emanuele Di Luzio}}
+\date{Gennaio 2023}
 
 \begin{document}
 
 \maketitle
-\vspace{-0.5cm}
+%\vspace{-0.5cm}
 
 Il progetto riguarda il controllo di \dots, la cui dinamica viene descritta dalle seguenti equazioni differenziali 
 %

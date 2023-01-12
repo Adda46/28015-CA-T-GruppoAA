@@ -1,0 +1,138 @@
+\usepackage[margin=3cm]{geometry}
+\geometry{a4paper, top=2cm, bottom=3cm, left=1.5cm, right=1.5cm, heightrounded, bindingoffset=5mm}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+
+\usepackage{psfrag,amsmath,amssymb,amsthm,amsfonts,verbatim}
+\usepackage{mathtools, physics, textcomp}
+\usepackage[figurename=Fig.,font=small,labelfont=bf]{caption}
+\usepackage{capt-of, subcaption, wrapfig, float, hyperref, cleveref}
+
+\usepackage{latexsym, gensymb, graphicx, graphics}
+\usepackage{xcolor,color,soul}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+\usepackage{newlfont}
+\usepackage{footnote}
+
+\setlength{\parindent}{0pt}
+
+%\usepackage{tikz}
+%\usetikzlibrary{snakes}
+%\usetikzlibrary{positioning}
+%\usetikzlibrary{shapes,arrows}
+
+%\tikzstyle{block} = [draw, fill=white, rectangle, 
+%	minimum height=3em, minimum width=6em]
+%\tikzstyle{sum} = [draw, fill=white, circle, node distance=1cm]
+%\tikzstyle{input} = [coordinate]
+%\tikzstyle{output} = [coordinate]
+%\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\graphicspath{ {../attachments/} }
+
+\newcommand{\bb}{
+	\bigbreak
+}
+
+\newcommand{\R}{
+	\ensuremath
+	\mathbb{R}
+}
+
+\newcommand{\C}{
+	\ensuremath
+	\mathbb{C}
+}
+
+\newcommand{\Lap}{
+	\ensuremath
+	\mathcal{L}
+}
+
+\newcommand{\M}[3]{
+	\ensuremath
+	\mathcal{M}\paren{#1,#2,#3}
+}
+
+\newcommand{\llimit}[3]{
+	\ensuremath
+	\lim_{#1 \rightarrow #2} #3
+}
+
+\newcommand{\pinf}{
+	\ensuremath
+	+\infty
+}
+
+\newcommand{\minf}{
+	\ensuremath
+	-\infty
+}
+
+\newcommand{\intreal}[2]{
+	\ensuremath
+	\int_{\R} #1 \dd{#2}
+}
+
+\newcommand{\intnoreal}[4]{
+	\ensuremath
+	\int_{#1}^{#2} #3 \dd{#4}
+}
+
+\newcommand{\ifincases}[1]{
+	\ensuremath
+	\; \textrm{ se } \; #1
+}
+
+\newcommand{\sgn}[1]{
+	\operatorname{sgn} \left( #1 \right)
+}
+
+\newcommand{\paren}[1]{
+	\ensuremath
+	\left( #1 \right)
+}
+
+\newcommand{\sparen}[1]{
+	\ensuremath
+	\left[ #1 \right]
+}
+
+\newcommand{\resource}[3]{
+	\begin{center}
+	\includegraphics[scale = #1]{#2}
+	\end{center}
+	\captionof{figure}{#3}
+}
+
+\newcommand{\rarr}{
+	$\longrightarrow$
+}
+
+\newcommand{\lt}[1]{
+	\ensuremath
+	\mathcal{L}\sparen{#1}
+}
+
+\newcommand{\lat}[1]{
+	\ensuremath
+	\mathcal{L}^{-1}\sparen{#1}
+}
+
+\newcommand{\ltint}[3]{
+	\ensuremath
+	\int_{0^-}^{\pinf} #1 e^{#2} \dd{#3}
+}
+
+\newcommand{\latint}[3]{
+	\ensuremath
+	\frac{1}{2\pi j}\int_{\sigma-j\infty}^{\sigma + j\infty} #1 e^{#2} \dd{#3}
+}
+
+\newcommand{\cof}[1]{
+	\ensuremath
+	\textrm{Cof}\paren{#1}
+}

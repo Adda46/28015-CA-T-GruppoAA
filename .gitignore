@@ -1,0 +1,17 @@
+.DS_Store
+
+*.aux
+*.log
+*.toc
+*.dvi
+*.ps
+
+*.pdf
+
+*.fdb_latexmk
+*.synctex.gz
+
+*.snm
+*.vrb
+*.nav
+*.out
