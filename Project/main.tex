@@ -109,7 +109,7 @@ L'evoluzione del sistema espressa nelle variabili alle variazioni pu\`o essere a
 dove le matrici $A$, $B$, $C$ e $D$ vengono calcolate come matrici jacobiane derivate dall'espressione tramite polinomio di Taylor delle equazioni di stato ed uscita per una traiettoria \textit{vicina} all'equilibrio. Dalle specifiche recuperiamo le seguenti relazioni: $\beta = a = J = 2$:
 %
 \begin{subequations}
-\begin{align}\label{eq:a_matrix}
+\begin{align}\label{eq:matrices}
 	A &= \pdv{f(x_e, u_e)}{x} = \eval{\begin{bmatrix}
 		\pdv{f_1(x, u)}{x_1} & \pdv{f_1(x, u)}{x_2} \\
 		\pdv{f_2(x, u)}{x_1} & \pdv{f_2(x, u)}{x_2}
@@ -147,7 +147,7 @@ dove le matrici $A$, $B$, $C$ e $D$ vengono calcolate come matrici jacobiane der
 \end{align}
 \end{subequations}
 La dimensione delle matrici è coerente con la definizione di SISO. A questo punto, scriviamo le equazioni del sistema linearizzato in forma matriciale:
-\begin{subequations}
+\begin{subequations}\label{eq:linearized_system}
 	\begin{align}
 		\delta \dot x & = \begin{bmatrix}
 			0 & 1 \\ \frac{\sqrt{3}}{4} & -1
@@ -160,18 +160,48 @@ La dimensione delle matrici è coerente con la definizione di SISO. A questo pun
 	\end{align}
 \end{subequations}
 
-\section{Funzione di Trasferimento}
-
-In questa sezione, andiamo a calcolare la funzione di trasferimento $G(s)$ dall'ingresso $\delta u$ all'uscita $\delta y$ mediante la seguente formula 
-%
-%
-\begin{align}\label{eq:transfer_function}
-G(s) = \dots = \dots.
+\section{Funzione di trasferimento}
+Procediamo con il calcolo della FdT facendo riferimento alla definizione matriciale, ottenuta partendo dalla trasformata dell'evoluzione forzata dell'uscita del sistema lineare:
+\begin{align*}
+	G(s) = C(sI-A)^{-1}B +D = C\sparen{\frac{(sI-A)^\dag}{\det(sI-A)}}B + D
+\end{align*}
+dove $\dag$ è usato per indicare la \textbf{matrice aggiunta}, cioè la trasposta della matrice contenente i \textit{complementi algebrici} degli elementi originari. Definiamo la matrice in questione e calcoliamone subito il suo determinante:
+\begin{align*}
+	sI-A = \begin{bmatrix}
+		s & -1 \\ -\frac{\sqrt{3}}{4} & s+1
+	\end{bmatrix} \quad \quad \quad \det(sI-A) = s^2+s - \frac{\sqrt{3}}{4}
+\end{align*}
+e procediamo con il calcolo dei coefficienti algebrici, ricordando che $\cof{a_{i,j}} = (-1)^{i+j}\det(M_{i,j})$, con $M$ matrice a cui è stata soppressa la i-esima riga e la j-esima colonna. Dunque, chiamando $k_{i,j}$ gli elementi della matrice $sI-A$, abbiamo:
+\begin{align*}
+	\cof{k_{1,1}} & = (-1)^{i+j} \det(s+1) = s+1 \quad & \quad \cof{k_{1,2}} & = -\det\paren{-\frac{\sqrt{3}}{4}} = \frac{\sqrt{3}}{{4}} \\
+	\cof{k_{2,1}} & = -\det(-1) = 1 \quad & \quad \cof{k_{2,2}} & \det(s) = s 
+\end{align*}
+Otteniamo la matrice aggiunta eseguendo la trasposta di quella dei cofattori
+\begin{align*}
+	(sI-A)^\dag = \begin{bmatrix}
+		s+1 & \frac{\sqrt{3}}{4} \\ 
+		1 & s
+	\end{bmatrix}^T = \begin{bmatrix}
+		s+ 1 & 1 \\
+		\frac{\sqrt{3}}{4} & s
+	\end{bmatrix}
+\end{align*}
+Ricollegandoci alla definizione della $G$ ad inizio sezione, scriviamo:
+\begin{align*}
+	G(s) = \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix}
+		\frac{s+1}{s^2+s - \frac{\sqrt{3}}{4}} & \frac{1}{s^2+s - \frac{\sqrt{3}}{4}} \\
+		\frac{\sqrt{3}/4}{s^2+s - \frac{\sqrt{3}}{4}} & \frac{s}{s^2+s - \frac{\sqrt{3}}{4}}
+	\end{bmatrix} \begin{bmatrix}
+		0 \\ 1
+	\end{bmatrix} = \frac{1}{s^2+s - \frac{\sqrt{3}}{4}}
+\end{align*}
+Scomponiamo il denominatore per evidenziare i poli, e otteniamo la relazione finale:
+\begin{align}\label{eq:fdt}
+	G(s) = \frac{1}{\sparen{x + \paren{\frac{1}{2} + \frac{\sqrt{1+\sqrt{3}}}{2}}}\sparen{x + \paren{\frac{1}{2}-\frac{\sqrt{1+\sqrt{3}}}{2}}}}
 \end{align}
-%
-Dunque il sistema linearizzato~\eqref{eq:linearized_system} è caratterizzato dalla funzione di trasferimento~\eqref{eq:transfer_function} con $\dots$ poli $p_1 = \cdots, \cdots$ e $\dots$ zeri $z_i =\cdots$. In Figura \dots mostriamo il corrispondente diagramma di Bode. 
 
-\dots
+Dunque il sistema linearizzato \eqref{eq:linearized_system} è caratterizzato dalla funzione di trasferimento \eqref{eq:fdt} con guadagno $\mu=1$, 2 poli reali () e nessuno zero. In figura \dots mostriamo il corrispondente diagramma di Bode che però non farò stasera perché ho sonno regaz a domani :)
+
 
 \section{Mappatura specifiche del regolatore}
 \label{sec:specifications}
