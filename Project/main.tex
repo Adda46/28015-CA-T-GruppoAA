@@ -1,6 +1,7 @@
 \documentclass[a4paper, 11pt]{article}
 
 \input{commands.tex}
+\usepackage{relsize}
 
 \newcommand{\courseacronym}{CAT}
 \newcommand{\coursename}{Controlli Automatici - T}
@@ -22,7 +23,7 @@
 \begin{document}
 
 \maketitle
-%\vspace{-0.5cm}
+%\vspace{-0.5cm} this is unnecessary
 
 Il progetto riguarda il controllo dell'\textit{assetto di un drone planare}, la cui dinamica viene descritta dalle seguenti equazioni differenziali 
 %
@@ -38,94 +39,128 @@ dove $J \in \R$ rappresenta il \textbf{momento di inerzia} del drone rispetto al
 
 \bb
 
-La variabile di ingresso del sistema, definita come $F_p(t) = F_1(t) - F_2(t)$, indica la \textbf{differenza tra le forze di propulsione} $F_1(t), F_2(t)$ applicate sul drone.
+La variabile di ingresso del sistema, definita come $F_p(t) = F_1(t) - F_2(t)$, indica la \textbf{differenza tra le forze di propulsione} $F_1(t), F_2(t)$ applicate sul drone. Si suppone, infine, che sia possibile \textbf{misurare l'angolo di inclinazione} $\theta(t)$ per ogni istante di tempo.
 
 \resource{0.5}{drone.png}{Rappresentazione nel piano del drone considerato.}
 
-\section{Espressione del sistema in forma di stato e calcolo del sistema linearizzato intorno ad una coppia di equilibrio}
+\section{Passaggio alla forma di stato e linearizzazione}
+\subsection{Forma di stato}
 
-Innanzitutto, esprimiamo il sistema \eqref{eq:system} nella seguente forma di stato
-\begin{subequations}
-\begin{align}\label{eq:state_form}
-	\dot{x} &= f(x,u) \\
-	y &= h(x,u)
+Per farlo, individuiamo la composizione dello stato $x(t)$,  partendo dalla relazione differenziale \eqref{eq:system} modificata in modo da isolare i termini che compaiono derivati:
+\begin{align*}
+	\begin{aligned}
+		\dot \theta & = \omega \\
+		\dot \omega & = -\frac{\beta}{J} \omega + \frac{a}{2J} \sin(\theta) F_v + \frac{a}{J} F_p
+	\end{aligned}
+\end{align*}
+Prendendo in considerazione anche le informazioni date dalle specifiche riguardo l'ingresso ($F_p$) e l'uscita ($\theta$, in quanto supposta misurabile), definiamo:
+\begin{align*}
+	x \coloneqq \begin{bmatrix}
+		x_1 \\ x_2
+	\end{bmatrix} = \begin{bmatrix}
+		\theta \\ \omega
+	\end{bmatrix} \quad \quad u \coloneqq F_p \quad \quad y \coloneqq x_1
+\end{align*}
+Mettendo insieme quanto ricavato, scriviamo la relazione in forma di stato (i.e. $\dot x = f(x, u)$ e $y = h(x, u)$):
+\begin{subequations}\label{eq:fds}
+\begin{align}
+	\dot x & = \begin{bmatrix}
+		\dot x_1 \\ \dot x_2
+	\end{bmatrix} = \begin{bmatrix} 
+		f_1(x, u) \\ f_2(x, u)
+	\end{bmatrix} = \begin{bmatrix}
+		x_2 \\ -\frac{\beta}{J} x_2 + \frac{a}{2J} \sin(x_1) + \frac{a}{J} u
+	\end{bmatrix} \\
+	y & = h(x, u) =  x_1
 \end{align}
 \end{subequations}
-andando ad individuare stato $x$, ingresso $u$ e uscita $y$:
-%
+Avendo uno stato in $\R^2$ e ingresso e uscita entrambi \textbf{scalari}, il sistema in analisi è \textbf{SISO}.
+
+\subsection{Coppia di equilibrio e linearizzazione intorno ad essa}
+Chiamiamo $(x_e, u_e)$ una \textbf{coppia di equilibrio} se applicando un ingresso $u_e$ in presenza di uno stato $x_e$, il sistema rimane \textit{piantato} nello stato in cui si trova. Da qui concludiamo che \textit{variazione dello stato} è nulla, e che quindi è possibile trovare la coppia di equilibrio ponendo $f(x, u) = \dot x = 0$:
 \begin{align*}
-	x := \dots, \quad u := \dots, \quad y := \dots.
-\end{align*}
-%
-Coerentemente con questa scelta, ricaviamo dal sistema~\eqref{eq:system} la seguente espressione per le funzioni $f$ ed $h$
-%
-\begin{align*}
-	f(x,u) &:= \dots
-	\\
-	h(x,u) &:= \dots.
-\end{align*}
-%
-Una volta calcolate $f$ ed $h$ esprimiamo~\eqref{eq:system} nella seguente forma di stato
-%
-\begin{subequations}\label{eq:our_system_state_form}
-\begin{align}
 	\begin{bmatrix}
-		\dot{x}_1
-		\\
-		\dots
-	\end{bmatrix} &= \dots \label{eq:state_form_1}
-	\\
-	y &= \dots.
-\end{align}
-\end{subequations}
-%
-Per trovare la coppia di equilibrio $(x_e, u_e)$ di~\eqref{eq:our_system_state_form}, andiamo a risolvere il seguente sistema di equazioni
-%
-\begin{align}
-	\dots,
-\end{align}
-%
-dal quale otteniamo
-%
-\begin{align}
-	x_e := \dots,  \quad u_e = \dots.\label{eq:equilibirum_pair}
-\end{align}
-%
-Definiamo le variabili alle variazioni $\delta x$, $\delta u$ e $\delta y$ come 
-%
-\begin{align*}
-	\delta x &= \dots, 
-	\quad
-	\delta u = \dots, 
-	\quad
-	\delta y = \dots.
+		f_1(x_e, u_e) \\ f_2 (x_e, u_e)
+	\end{bmatrix} = \begin{bmatrix}
+		x_{2,e} \\ -\frac{\beta}{J} x_{2,e} + \frac{a}{2J} \sin(x_{1,e}) + \frac{a}{J} u_e
+	\end{bmatrix} = \begin{bmatrix}
+		0 \\ 0
+	\end{bmatrix}
 \end{align*}
+Facendo riferimento alle specifiche, il parametro $\theta_e$ è conosciuto ed è pari a $\pi/6$. In forma di stato, dunque, otteniamo una nuova relazione che possiamo utilizzare per trovare la coppia ($\theta_e = x_{1_e}$):
+\begin{align}\label[type]{eq:equilibrio}
+	x_e = \begin{bmatrix}
+		x_{1,e} \\ x_{2,e}
+	\end{bmatrix} = \begin{bmatrix}
+		\pi / 6 \\ 0
+	\end{bmatrix} \quad \quad
+   u_e & = - \frac{1}{2} \sin(x_{1,e}) = - \frac{1}{4}
+\end{align}
+A questo punto siamo in grado di \textbf{linearizzare il sistema intorno alla coppia di equilibrio} appena calcolata.
 %
 L'evoluzione del sistema espressa nelle variabili alle variazioni pu\`o essere approssimativamente descritta mediante il seguente sistema lineare
 %
-\begin{subequations}\label{eq:linearized_system}
-\begin{align}
+\begin{align*}
 	\delta \dot{x} &= A\delta x + B\delta u
 	\\
-	\delta y &= C\delta x + D\delta u,
+	\delta y &= C\delta x + D\delta u
+\end{align*}
+%
+dove le matrici $A$, $B$, $C$ e $D$ vengono calcolate come matrici jacobiane derivate dall'espressione tramite polinomio di Taylor delle equazioni di stato ed uscita per una traiettoria \textit{vicina} all'equilibrio. Dalle specifiche recuperiamo le seguenti relazioni: $\beta = a = J = 2$:
+%
+\begin{subequations}
+\begin{align}\label{eq:a_matrix}
+	A &= \pdv{f(x_e, u_e)}{x} = \eval{\begin{bmatrix}
+		\pdv{f_1(x, u)}{x_1} & \pdv{f_1(x, u)}{x_2} \\
+		\pdv{f_2(x, u)}{x_1} & \pdv{f_2(x, u)}{x_2}
+	\end{bmatrix}}_{\substack{x = x_e \\ u = u_e}} = 
+	\begin{bmatrix}
+		0 & 1 \\
+		\frac{a}{2J} \cos x_{1,e} & - \frac{\beta}{J}
+	\end{bmatrix} =
+	\begin{bmatrix}
+		0 & 1 \\ \frac{\sqrt{3}}{4} & -1
+	\end{bmatrix}
 \end{align}
-\end{subequations}
-%
-dove le matrici $A$, $B$, $C$ e $D$ vengono calcolate come
-%
-\begin{subequations}\label{eq:matrices}
 \begin{align}
-	A &= \dots
-	\\
-	B &= \dots
-	\\
-	C &= \dots
-	\\
-	D &= \dots.
+	B = \pdv{f(x_e, u_e)}{u} = \eval{\begin{bmatrix}
+		\pdv{f_1(x, u)}{u}  \\
+		\pdv{f_2(x, u)}{u}
+	\end{bmatrix}}_{\substack{x = x_e \\ u = u_e}} = \begin{bmatrix}
+		0 \\ \frac{a}{J}
+	\end{bmatrix} = \begin{bmatrix}
+		0 \\ 1
+	\end{bmatrix}
+\end{align}
+%
+\begin{align}
+	C = \pdv{h(x_e, u_e)}{x} = \eval{\begin{bmatrix}
+		\pdv{h(x, u)}{x_1} & \pdv{h(x, u)}{x_2}
+	\end{bmatrix}}_{\substack{x = x_e \\ u = u_e}} = \begin{bmatrix}
+		1 & 0
+	\end{bmatrix}
+\end{align}
+\begin{align}
+	D = \pdv{h(x_e, u_e)}{u} = \eval{\begin{bmatrix}
+		\pdv{h(x, u)}{u}
+	\end{bmatrix}}_{\substack{x = x_e \\ u = u_e}} = 0	
 \end{align}
 \end{subequations}
-%
-\section{Calcolo Funzione di Trasferimento}
+La dimensione delle matrici è coerente con la definizione di SISO. A questo punto, scriviamo le equazioni del sistema linearizzato in forma matriciale:
+\begin{subequations}
+	\begin{align}
+		\delta \dot x & = \begin{bmatrix}
+			0 & 1 \\ \frac{\sqrt{3}}{4} & -1
+		\end{bmatrix} \delta x + \begin{bmatrix}
+			0 \\ 1
+		\end{bmatrix} \delta u \\
+		\delta y & = \begin{bmatrix}
+			1 & 0
+		\end{bmatrix} \delta x
+	\end{align}
+\end{subequations}
+
+\section{Funzione di Trasferimento}
 
 In questa sezione, andiamo a calcolare la funzione di trasferimento $G(s)$ dall'ingresso $\delta u$ all'uscita $\delta y$ mediante la seguente formula 
 %
