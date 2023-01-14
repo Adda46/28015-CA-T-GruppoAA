@@ -69,7 +69,7 @@ Mettendo insieme quanto ricavato, scriviamo la relazione in forma di stato (i.e.
 	\end{bmatrix} = \begin{bmatrix} 
 		f_1(x, u) \\ f_2(x, u)
 	\end{bmatrix} = \begin{bmatrix}
-		x_2 \\ -\frac{\beta}{J} x_2 + \frac{a}{2J} \sin(x_1) + \frac{a}{J} u
+		x_2 \\ -\frac{\beta}{J} x_2 + \frac{a}{2J} \sin(x_1)F_v + \frac{a}{J} u
 	\end{bmatrix} \\
 	y & = h(x, u) =  x_1
 \end{align}
@@ -82,19 +82,19 @@ Chiamiamo $(x_e, u_e)$ una \textbf{coppia di equilibrio} se applicando un ingres
 	\begin{bmatrix}
 		f_1(x_e, u_e) \\ f_2 (x_e, u_e)
 	\end{bmatrix} = \begin{bmatrix}
-		x_{2,e} \\ -\frac{\beta}{J} x_{2,e} + \frac{a}{2J} \sin(x_{1,e}) + \frac{a}{J} u_e
+		x_{2,e} \\ -\frac{\beta}{J} x_{2,e} + \frac{a}{2J} \sin(x_{1,e})F_v + \frac{a}{J} u_e
 	\end{bmatrix} = \begin{bmatrix}
 		0 \\ 0
 	\end{bmatrix}
 \end{align*}
-Facendo riferimento alle specifiche, il parametro $\theta_e$ è conosciuto ed è pari a $\pi/6$. In forma di stato, dunque, otteniamo una nuova relazione che possiamo utilizzare per trovare la coppia ($\theta_e = x_{1_e}$):
+Facendo riferimento alle specifiche, il parametro $\theta_e$ è conosciuto ed è pari a $\pi/6$, e $F_v = -2$. In forma di stato, dunque, otteniamo una nuova relazione che possiamo utilizzare per trovare la coppia ($\theta_e = x_{1_e}$):
 \begin{align}\label[type]{eq:equilibrio}
 	x_e = \begin{bmatrix}
 		x_{1,e} \\ x_{2,e}
 	\end{bmatrix} = \begin{bmatrix}
 		\pi / 6 \\ 0
 	\end{bmatrix} \quad \quad
-   u_e & = - \frac{1}{2} \sin(x_{1,e}) = - \frac{1}{4}
+   u_e & = - \frac{1}{2} \sin(x_{1,e})F_v = \sin(x_{1,e}) = 0.5
 \end{align}
 A questo punto siamo in grado di \textbf{linearizzare il sistema intorno alla coppia di equilibrio} appena calcolata.
 %
@@ -116,10 +116,10 @@ dove le matrici $A$, $B$, $C$ e $D$ vengono calcolate come matrici jacobiane der
 	\end{bmatrix}}_{\substack{x = x_e \\ u = u_e}} = 
 	\begin{bmatrix}
 		0 & 1 \\
-		\frac{a}{2J} \cos x_{1,e} & - \frac{\beta}{J}
+		\frac{a}{2J} \cos(x_{1,e})F_v & - \frac{\beta}{J}
 	\end{bmatrix} =
 	\begin{bmatrix}
-		0 & 1 \\ \frac{\sqrt{3}}{4} & -1
+		0 & 1 \\ -\frac{\sqrt{3}}{2} & -1
 	\end{bmatrix}
 \end{align}
 \begin{align}
@@ -150,7 +150,7 @@ La dimensione delle matrici è coerente con la definizione di SISO. A questo pun
 \begin{subequations}\label{eq:linearized_system}
 	\begin{align}
 		\delta \dot x & = \begin{bmatrix}
-			0 & 1 \\ \frac{\sqrt{3}}{4} & -1
+			0 & 1 \\ -\frac{\sqrt{3}}{2} & -1
 		\end{bmatrix} \delta x + \begin{bmatrix}
 			0 \\ 1
 		\end{bmatrix} \delta u \\
@@ -168,36 +168,36 @@ Procediamo con il calcolo della FdT facendo riferimento alla definizione matrici
 dove $\dag$ è usato per indicare la \textbf{matrice aggiunta}, cioè la trasposta della matrice contenente i \textit{complementi algebrici} degli elementi originari. Definiamo la matrice in questione e calcoliamone subito il suo determinante:
 \begin{align*}
 	sI-A = \begin{bmatrix}
-		s & -1 \\ -\frac{\sqrt{3}}{4} & s+1
-	\end{bmatrix} \quad \quad \quad \det(sI-A) = s^2+s - \frac{\sqrt{3}}{4}
+		s & -1 \\ \frac{\sqrt{3}}{2} & s+1
+	\end{bmatrix} \quad \quad \quad \det(sI-A) = s^2+s +\frac{\sqrt{3}}{2}
 \end{align*}
 e procediamo con il calcolo dei coefficienti algebrici, ricordando che $\cof{a_{i,j}} = (-1)^{i+j}\det(M_{i,j})$, con $M$ matrice a cui è stata soppressa la i-esima riga e la j-esima colonna. Dunque, chiamando $k_{i,j}$ gli elementi della matrice $sI-A$, abbiamo:
 \begin{align*}
-	\cof{k_{1,1}} & = (-1)^{i+j} \det(s+1) = s+1 \quad & \quad \cof{k_{1,2}} & = -\det\paren{-\frac{\sqrt{3}}{4}} = \frac{\sqrt{3}}{{4}} \\
+	\cof{k_{1,1}} & = (-1)^{i+j} \det(s+1) = s+1 \quad & \quad \cof{k_{1,2}} & = -\det\paren{\frac{\sqrt{3}}{2}} = -\frac{\sqrt{3}}{2} \\
 	\cof{k_{2,1}} & = -\det(-1) = 1 \quad & \quad \cof{k_{2,2}} & \det(s) = s 
 \end{align*}
 Otteniamo la matrice aggiunta eseguendo la trasposta di quella dei cofattori
 \begin{align*}
 	(sI-A)^\dag = \begin{bmatrix}
-		s+1 & \frac{\sqrt{3}}{4} \\ 
+		s+1 & -\frac{\sqrt{3}}{2} \\ 
 		1 & s
 	\end{bmatrix}^T = \begin{bmatrix}
 		s+ 1 & 1 \\
-		\frac{\sqrt{3}}{4} & s
+		-\frac{\sqrt{3}}{2} & s
 	\end{bmatrix}
 \end{align*}
 Ricollegandoci alla definizione della $G$ ad inizio sezione, scriviamo:
 \begin{align*}
 	G(s) = \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix}
-		\frac{s+1}{s^2+s - \frac{\sqrt{3}}{4}} & \frac{1}{s^2+s - \frac{\sqrt{3}}{4}} \\
-		\frac{\sqrt{3}/4}{s^2+s - \frac{\sqrt{3}}{4}} & \frac{s}{s^2+s - \frac{\sqrt{3}}{4}}
+		\frac{s+1}{s^2+s + \frac{\sqrt{3}}{2}} & \frac{1}{s^2+s + \frac{\sqrt{3}}{2}} \\
+		\frac{ -\frac{\sqrt{3}}{2}}{s^2+s + \frac{\sqrt{3}}{2}} & \frac{s}{s^2+s + \frac{\sqrt{3}}{2}}
 	\end{bmatrix} \begin{bmatrix}
 		0 \\ 1
-	\end{bmatrix} = \frac{1}{s^2+s - \frac{\sqrt{3}}{4}}
+	\end{bmatrix} = \frac{1}{s^2+s + \frac{\sqrt{3}}{2}}
 \end{align*}
 Scomponiamo il denominatore per evidenziare i poli, e otteniamo la relazione finale:
 \begin{align}\label{eq:fdt}
-	G(s) = \frac{1}{\sparen{x + \paren{\frac{1}{2} + \frac{\sqrt{1+\sqrt{3}}}{2}}}\sparen{x + \paren{\frac{1}{2}-\frac{\sqrt{1+\sqrt{3}}}{2}}}}
+	G(s) = \frac{1}{\sparen{s + \paren{\frac{1+\sqrt{1-2\sqrt{3}}}{2}}}\sparen{s + \paren{\frac{1-\sqrt{1-2\sqrt{3}}}{2}}}}
 \end{align}
 
 Dunque il sistema linearizzato \eqref{eq:linearized_system} è caratterizzato dalla funzione di trasferimento \eqref{eq:fdt} con guadagno $\mu=1$, 2 poli reali () e nessuno zero. In figura \dots mostriamo il corrispondente diagramma di Bode che però non farò stasera perché ho sonno regaz a domani :)
